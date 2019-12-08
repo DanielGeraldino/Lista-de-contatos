@@ -18,7 +18,7 @@ class ContatoAdapter(private val listaContato: List<Contato>) : RecyclerView.Ada
 
         fun preencheDadoContao(contato: Contato){
             nome.text = contato.nome
-            numero.text = contato.numero
+            numero.text = contato.numero.toString()
         }
     }
 
