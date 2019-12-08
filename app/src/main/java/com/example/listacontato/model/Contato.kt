@@ -1,5 +1,5 @@
 package com.example.listacontato.model
 
-class Contato(val id: Int, var nome: String, var numero: String){
+class Contato(var nome: String, var numero: String){
 
 }

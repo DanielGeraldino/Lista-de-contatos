@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewManeger = LinearLayoutManager(this)
+        viewManeger = LinearLayoutManager(this) as RecyclerView.LayoutManager
         viewAdapter = ContatoAdapter(listaContatos)
 
         recycleViewContato = tela_principal.recyclerContato.apply {
