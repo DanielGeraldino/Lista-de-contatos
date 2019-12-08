@@ -6,6 +6,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <include
+        android:id="@+id/tela_principal"
         layout="@layout/tela_principal"
         android:layout_width="0dp"
         android:layout_height="0dp"
