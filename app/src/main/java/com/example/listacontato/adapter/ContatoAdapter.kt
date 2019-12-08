@@ -35,5 +35,4 @@ class ContatoAdapter(private val listaContato: List<Contato>) : RecyclerView.Ada
         val contato: Contato = listaContato[position]
         holder.preencheDadoContao(contato)
     }
-
 }

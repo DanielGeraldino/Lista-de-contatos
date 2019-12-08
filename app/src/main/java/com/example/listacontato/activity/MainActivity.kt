@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.listacontato.Helper.DataBaseContato
@@ -41,6 +42,10 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         listaContatos = carregaListaContato()
+        recycleViewContato.adapter = ContatoAdapter(listaContatos)
+        recycleViewContato.adapter?.notifyDataSetChanged()
+
+        Toast.makeText(applicationContext, "OnStat", Toast.LENGTH_LONG).show()
     }
 
     fun cadastrarContato(v: View) = startActivity(Intent(this, CadastrarContatoActivity::class.java))
