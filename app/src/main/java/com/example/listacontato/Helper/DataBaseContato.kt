@@ -101,4 +101,15 @@ class DataBaseContato(context: Context) : SQLiteOpenHelper(context, DATA_BASE_NA
 
         dbWrite.execSQL(query)
     }
+
+    fun editarContato(contato: Contato){
+
+        val nome = contato.nome
+        val numero = contato.numero
+        val id = contato.id
+
+        writableDatabase.execSQL("UPDATE $TABLE_CONTATO SET $KEY_NOME_CONTATO = '$nome', " +
+                "$KEY_NUMERO_CONTATO = $numero " +
+                "WHERE $KEY_ID = $id")
+    }
 }

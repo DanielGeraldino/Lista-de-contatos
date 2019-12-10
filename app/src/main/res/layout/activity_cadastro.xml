@@ -69,6 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:onClick="deletaContato"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         fab:menu_animationDelayPerItem="50"
@@ -110,6 +111,7 @@
             android:id="@+id/menu_item_salvar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="alterarContato"
             android:src="@drawable/ic_check_white_24dp"
             app:fab_colorNormal="#4CAF50"
             app:fab_colorPressed="#4CAF50"
@@ -120,9 +122,10 @@
             android:id="@+id/menu_item_excluir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="deletaContato"
+            android:src="@drawable/ic_delete_forever_white_24dp"
             app:fab_colorNormal="#FF0000"
             app:fab_colorPressed="#FF0000"
-            android:src="@drawable/ic_delete_forever_white_24dp"
             fab:fab_label="Excluir"
             fab:fab_size="mini" />
 
