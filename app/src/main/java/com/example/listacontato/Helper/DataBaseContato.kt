@@ -76,19 +76,29 @@ class DataBaseContato(context: Context) : SQLiteOpenHelper(context, DATA_BASE_NA
             return listContato
         }
 
+        var id: Int
         var nome: String
         var numero: Int
 
         if (cursor.moveToFirst()){
             do{
+                id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
                 nome = cursor.getString(cursor.getColumnIndex(KEY_NOME_CONTATO))
                 numero = cursor.getInt(cursor.getColumnIndex(KEY_NUMERO_CONTATO))
 
-                listContato.add(Contato(nome, numero))
+                listContato.add(Contato(id, nome, numero))
 
             } while (cursor.moveToNext())
         }
 
         return listContato
+    }
+
+    fun deleteContato(idContato: Int){
+
+        val dbWrite = this.writableDatabase
+        val query = "DELETE FROM $TABLE_CONTATO WHERE $KEY_ID = $idContato"
+
+        dbWrite.execSQL(query)
     }
 }

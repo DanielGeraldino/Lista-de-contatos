@@ -29,7 +29,8 @@ class MainActivity : AppCompatActivity() {
         listaContatos = carregaListaContato()
 
         viewManeger = LinearLayoutManager(this) as RecyclerView.LayoutManager
-        viewAdapter = ContatoAdapter(listaContatos)
+
+        viewAdapter = ContatoAdapter(listaContatos, this)
 
         recycleViewContato = tela_principal.recyclerContato.apply {
             setHasFixedSize(true)
@@ -41,14 +42,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        listaContatos = carregaListaContato()
-        recycleViewContato.adapter = ContatoAdapter(listaContatos)
-        recycleViewContato.adapter?.notifyDataSetChanged()
 
-        Toast.makeText(applicationContext, "OnStat", Toast.LENGTH_LONG).show()
+        atualizarRecycle()
     }
 
     fun cadastrarContato(v: View) = startActivity(Intent(this, CadastrarContatoActivity::class.java))
 
     fun carregaListaContato() = bancoDados.viewContatos()
+
+    fun atualizarRecycle(): Unit{
+        listaContatos = carregaListaContato()
+        recycleViewContato.adapter = ContatoAdapter(listaContatos, this)
+        recycleViewContato.adapter?.notifyDataSetChanged()
+    }
 }
