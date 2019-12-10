@@ -111,5 +111,7 @@ class DataBaseContato(context: Context) : SQLiteOpenHelper(context, DATA_BASE_NA
         writableDatabase.execSQL("UPDATE $TABLE_CONTATO SET $KEY_NOME_CONTATO = '$nome', " +
                 "$KEY_NUMERO_CONTATO = $numero " +
                 "WHERE $KEY_ID = $id")
+
+        Log.i("UPDATE", "NOME: " + nome)
     }
 }
