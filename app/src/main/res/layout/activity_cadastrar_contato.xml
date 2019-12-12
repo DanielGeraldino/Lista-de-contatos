@@ -54,12 +54,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.santalu.maskedittext.MaskEditText
             android:id="@+id/editTelefone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Numero de telefone"
-            android:inputType="number|phone" />
+            android:inputType="phone"
+            app:met_mask="(##) ##### ####"
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -68,7 +70,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:clickable="true"
-        android:onClick="salvarContato"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

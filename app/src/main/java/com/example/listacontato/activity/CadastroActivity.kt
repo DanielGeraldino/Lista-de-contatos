@@ -117,7 +117,7 @@ class CadastroActivity : AppCompatActivity() {
         if(!textoNome.isEmpty()){
             if(!textoNumero.isEmpty()){
                 contato.nome = textoNome
-                contato.numero = textoNumero.toInt()
+                contato.numero = textoNumero.toLong()
                 dados.editarContato(contato)
 
                 Toast.makeText(applicationContext, "Alteração salvar!", Toast.LENGTH_SHORT).show()

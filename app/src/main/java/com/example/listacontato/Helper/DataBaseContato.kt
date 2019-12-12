@@ -45,7 +45,7 @@ class DataBaseContato(context: Context) : SQLiteOpenHelper(context, DATA_BASE_NA
 
         val contentValues = ContentValues()
         val nome: String = contato.nome
-        val numero: Int = contato.numero
+        val numero: Long = contato.numero
         val imageArray: ByteArray? = contato.imageArrayByte
 
         contentValues.put(KEY_NOME_CONTATO, nome)
@@ -78,18 +78,23 @@ class DataBaseContato(context: Context) : SQLiteOpenHelper(context, DATA_BASE_NA
 
         var id: Int
         var nome: String
-        var numero: Int
+        var numero: Long
         var imageArray: ByteArray?
 
         if (cursor.moveToFirst()){
             do{
                 id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
                 nome = cursor.getString(cursor.getColumnIndex(KEY_NOME_CONTATO))
-                numero = cursor.getInt(cursor.getColumnIndex(KEY_NUMERO_CONTATO))
+                numero = cursor.getLong(cursor.getColumnIndex(KEY_NUMERO_CONTATO))
                 imageArray = cursor.getBlob(cursor.getColumnIndex(KEY_IMAGEM_CONTATO))
 
-                listContato.add(Contato(id, nome, numero))
-                //listContato.add(Contato(id, nome, numero, imageArray))
+                if(imageArray == null){
+                    listContato.add(Contato(id, nome, numero))
+                } else {
+                    listContato.add(Contato(id, nome, numero, imageArray))
+                    Log.i("IMAGE", imageArray.toString())
+                }
+
             } while (cursor.moveToNext())
         }
 
