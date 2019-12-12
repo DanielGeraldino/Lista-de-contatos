@@ -6,16 +6,14 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import com.example.listacontato.Helper.DataBaseContato
 import com.example.listacontato.R
+import com.example.listacontato.Util.transformaUriEmByteArray
 import com.example.listacontato.model.Contato
 import kotlinx.android.synthetic.main.activity_cadastro.*
-import java.util.jar.Manifest
-import kotlin.properties.Delegates
 
 class CadastroActivity : AppCompatActivity() {
 
@@ -24,6 +22,11 @@ class CadastroActivity : AppCompatActivity() {
 
     private lateinit var nome: EditText
     private lateinit var numero: EditText
+
+    companion object {
+        private val IMAGE_PICK_CODE = 1000
+        private val PERMISSION_CODE = 1001
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,8 +51,7 @@ class CadastroActivity : AppCompatActivity() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
+        //super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when(requestCode){
             PERMISSION_CODE -> {
                 if(grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
@@ -63,13 +65,18 @@ class CadastroActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+        //super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
-            imageView.setImageURI(data?.data)
+
+            val image = data?.data
+            val imageByteArray = image?.let { transformaUriEmByteArray(it, this) }
+            contato.id?.let { imageByteArray?.let { it1 -> dados.addImage(it1, it) } }
+            imageView.setImageURI(image)
         }
     }
 
     fun adicionarFoto(v: View){
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             // Verifica se tem permissão
             if(checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) ==
@@ -95,12 +102,7 @@ class CadastroActivity : AppCompatActivity() {
         startActivityForResult(intent, IMAGE_PICK_CODE)
     }
 
-    companion object {
-        private val IMAGE_PICK_CODE = 1000
-        private val PERMISSION_CODE = 1001
-    }
-
-    fun deletaContato(v: View){
+    fun deletaContato(v: View) {
 
         contato.id?.let { dados.deleteContato(it) }
         Toast.makeText(applicationContext, "Contato deletado", Toast.LENGTH_SHORT).show()

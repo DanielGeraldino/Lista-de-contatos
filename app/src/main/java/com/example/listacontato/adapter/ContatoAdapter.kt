@@ -5,17 +5,19 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.listacontato.Helper.DataBaseContato
 import com.example.listacontato.R
+import com.example.listacontato.Util.transformaByteArrayEmUri
 import com.example.listacontato.activity.CadastroActivity
 import com.example.listacontato.model.Contato
 import kotlinx.android.synthetic.main.model_recycler_contato.view.*
 
 class ContatoAdapter(
-    protected val listaContato: List<Contato>,
+    private val listaContato: List<Contato>,
     val context: Context
 ) : RecyclerView.Adapter<ContatoAdapter.MyViewHolder>(){
 
@@ -26,24 +28,27 @@ class ContatoAdapter(
         private lateinit var contato: Contato
         private var nome: TextView = itemView.tNome
         private var numero: TextView = itemView.tNumero
+        private var image: ImageView = itemView.imgContato
         private var id: Int? = null
 
         init{
-            itemView.setOnClickListener { l ->
+            itemView.setOnClickListener { _ ->
                 val intent = Intent(context, CadastroActivity::class.java)
                 intent.putExtra("contato", contato)
                 context.startActivity(intent)
             }
         }
 
-        fun preencheDadoContato(contato: Contato){
+        fun preencheDadoContato(contato: Contato) {
 
             this.contato = contato
             nome.text = contato.nome
             numero.text = contato.numero.toString()
             id = contato.id
+            image.setImageURI(
+                contato.imageArrayByte?.let { transformaByteArrayEmUri(it) }
+            )
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
