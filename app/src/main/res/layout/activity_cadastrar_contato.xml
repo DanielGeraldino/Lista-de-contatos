@@ -23,23 +23,31 @@
             android:id="@+id/editNome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_person_black_24dp"
+            android:drawablePadding="3dp"
             android:hint="Nome"
+            android:paddingLeft="4dp"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:adjustViewBounds="false"
+        android:scaleType="centerCrop"
+        app:civ_circle_background_color="#000"
+        app:layout_constraintCircleRadius="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_account_circle_black_24dp" />
+        app:srcCompat="@drawable/images"
+        android:elevation="4dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
@@ -58,10 +66,12 @@
             android:id="@+id/editTelefone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_phone_android_black_24dp"
+            android:drawablePadding="3dp"
             android:hint="Numero de telefone"
             android:inputType="phone"
-            app:met_mask="(##) ##### ####"
-            />
+            android:paddingLeft="4dp"
+            app:met_mask="(##) ##### ####" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

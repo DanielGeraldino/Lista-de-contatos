@@ -16,16 +16,14 @@ import kotlinx.android.synthetic.main.activity_main.*
 class CadastrarContatoActivity : AppCompatActivity() {
 
     private lateinit var contato: Contato
-    private lateinit var nome: EditText
-    private lateinit var textoNumero: String
 
-    //private lateinit var numero: EditText
     private val bancoDados: DataBaseContato = DataBaseContato(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastrar_contato)
-        nome = editNome
+
+        imageView.setImageResource(R.drawable.images)
 
         fabSalvarContato.setOnClickListener {
             salvarContato()
@@ -34,8 +32,8 @@ class CadastrarContatoActivity : AppCompatActivity() {
 
     fun salvarContato(){
 
-        val textoNome = nome.text.toString()
-        textoNumero = editTelefone.rawText!!
+        val textoNome = editNome.text.toString()
+        val textoNumero = editTelefone.rawText!!
 
         if(!textoNome.isEmpty()){
             if(!textoNumero.isEmpty()){

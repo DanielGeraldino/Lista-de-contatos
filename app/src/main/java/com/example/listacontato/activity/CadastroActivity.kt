@@ -40,10 +40,19 @@ class CadastroActivity : AppCompatActivity() {
         editNome.setText(contato.nome)
         editTelefone.setText(contato.numero.toString())
 
-        contato.imageArrayByte?.let {
+        when(contato.imageArrayByte){
+            null -> imageView.setImageResource(R.drawable.images)
+            else -> imageView.setImageBitmap(transformaByteArrayEmBitmap(contato.imageArrayByte!!))
+        }
+
+        /*contato.imageArrayByte?.let {
             imageView.setImageBitmap(
                 transformaByteArrayEmBitmap(it)
             )
+        }*/
+
+        menu_item_ligar.setOnClickListener {
+            ligarParaContato()
         }
 
     }
@@ -67,12 +76,10 @@ class CadastroActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        //super.onActivityResult(requestCode, resultCode, data)
+
         if(resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
 
             imageUri = data?.data
-            //val imageByteArray = transformaUriEmByteArray(image!!, this)
-            //contato.id?.let { imageByteArray?.let { it1 -> dados.addImage(it1, it) } }
             imageView.setImageURI(imageUri)
         }
     }
@@ -139,6 +146,15 @@ class CadastroActivity : AppCompatActivity() {
         } else {
             Toast.makeText(applicationContext, "Digite um nome para salvar!", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    fun ligarParaContato(){
+
+        val telefone: String = "tel:+55" + contato.numero.toString()
+        val intent = Intent(Intent.ACTION_DIAL)
+
+        intent.setData(Uri.parse(telefone))
+        startActivity(intent)
     }
 }
 

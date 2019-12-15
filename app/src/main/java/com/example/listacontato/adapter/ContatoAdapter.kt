@@ -44,12 +44,10 @@ class ContatoAdapter(
             numero.text = contato.numero.toString()
             id = contato.id
 
-            image.setImageBitmap(contato.imageArrayByte?.let {
-
-                Log.i("Byte: ", contato.imageArrayByte.toString())
-                transformaByteArrayEmBitmap(it)
-            })
-
+            when(contato.imageArrayByte){
+                null -> image.setImageResource(R.drawable.images)
+                else -> image.setImageBitmap(transformaByteArrayEmBitmap(contato.imageArrayByte!!))
+            }
         }
     }
 

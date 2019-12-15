@@ -15,8 +15,6 @@ fun transformaUriEmByteArray(uri: Uri, context: Context): ByteArray {
     return context.contentResolver.openInputStream(uri)!!.buffered()!!.use { it.readBytes() }
 }
 
-
-
 fun transformaByteArrayEmBitmap(imageArray: ByteArray): Bitmap{
     return BitmapFactory.decodeByteArray(imageArray,0, imageArray.size)
 }

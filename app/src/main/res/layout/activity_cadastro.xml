@@ -156,6 +156,16 @@
             fab:fab_label="Foto"
             fab:fab_size="mini" />
 
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/menu_item_ligar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_phone_white_24dp"
+            app:fab_colorNormal="#045CA3"
+            app:fab_colorPressed="#045CA3"
+            fab:fab_label="Ligar"
+            fab:fab_size="mini" />
+
     </com.github.clans.fab.FloatingActionMenu>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
