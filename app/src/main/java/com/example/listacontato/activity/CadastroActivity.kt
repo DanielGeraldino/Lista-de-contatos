@@ -3,14 +3,17 @@ package com.example.listacontato.activity
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import com.example.listacontato.Helper.DataBaseContato
 import com.example.listacontato.R
+import com.example.listacontato.Util.transformaByteArrayEmBitmap
 import com.example.listacontato.Util.transformaUriEmByteArray
 import com.example.listacontato.model.Contato
 import kotlinx.android.synthetic.main.activity_cadastro.*
@@ -20,8 +23,7 @@ class CadastroActivity : AppCompatActivity() {
     private lateinit var contato: Contato
     private lateinit var dados: DataBaseContato
 
-    private lateinit var nome: EditText
-    private lateinit var numero: EditText
+    private var imageUri: Uri? = null
 
     companion object {
         private val IMAGE_PICK_CODE = 1000
@@ -35,14 +37,14 @@ class CadastroActivity : AppCompatActivity() {
         dados = DataBaseContato(this)
         contato = intent.getSerializableExtra("contato") as Contato
 
-        nome = editNome
-        numero = editTelefone
+        editNome.setText(contato.nome)
+        editTelefone.setText(contato.numero.toString())
 
-        val textoNome = contato.nome
-        val textoNumero = contato.numero.toString()
-
-        nome.setText(textoNome)
-        numero.setText(textoNumero)
+        contato.imageArrayByte?.let {
+            imageView.setImageBitmap(
+                transformaByteArrayEmBitmap(it)
+            )
+        }
 
     }
 
@@ -68,12 +70,13 @@ class CadastroActivity : AppCompatActivity() {
         //super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
 
-            val image = data?.data
-            val imageByteArray = image?.let { transformaUriEmByteArray(it, this) }
-            contato.id?.let { imageByteArray?.let { it1 -> dados.addImage(it1, it) } }
-            imageView.setImageURI(image)
+            imageUri = data?.data
+            //val imageByteArray = transformaUriEmByteArray(image!!, this)
+            //contato.id?.let { imageByteArray?.let { it1 -> dados.addImage(it1, it) } }
+            imageView.setImageURI(imageUri)
         }
     }
+
 
     fun adicionarFoto(v: View){
 
@@ -111,13 +114,20 @@ class CadastroActivity : AppCompatActivity() {
 
     fun alterarContato(v: View){
 
-        val textoNome: String = nome.text.toString()
-        val textoNumero = numero.text.toString()
+        val textoNome: String = editNome.text.toString()
+        val textoNumero = editTelefone.rawText!!
 
         if(!textoNome.isEmpty()){
             if(!textoNumero.isEmpty()){
-                contato.nome = textoNome
-                contato.numero = textoNumero.toLong()
+
+                contato.let{
+                    it.nome = textoNome
+                    it.numero = textoNumero.toLong()
+                    imageUri?.let{ iUri ->
+                        val byteArray = transformaUriEmByteArray(iUri, this)
+                        dados.addImage(byteArray, it.id!!)
+                    }
+                }
                 dados.editarContato(contato)
 
                 Toast.makeText(applicationContext, "Alteração salvar!", Toast.LENGTH_SHORT).show()

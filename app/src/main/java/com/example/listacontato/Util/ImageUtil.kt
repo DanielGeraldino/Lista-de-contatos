@@ -11,24 +11,12 @@ import android.provider.MediaStore
 import android.util.Log
 import java.io.ByteArrayOutputStream
 
-
-fun transformaUriEmByteArray(uri: Uri, context: Context) : ByteArray {
-
-    val outputStream = ByteArrayOutputStream()
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
-        val source = ImageDecoder.createSource(context.contentResolver, uri)
-        val bitmap: Bitmap = ImageDecoder.decodeBitmap(source)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 0, outputStream)
-    }
-
-    return outputStream.toByteArray()
+fun transformaUriEmByteArray(uri: Uri, context: Context): ByteArray {
+    return context.contentResolver.openInputStream(uri)!!.buffered()!!.use { it.readBytes() }
 }
 
-fun transformaByteArrayEmBitmap(imageArray: ByteArray) : Bitmap{
 
-    val bitmap = BitmapFactory.decodeByteArray(imageArray,0, imageArray.size)
 
-    return bitmap
-
+fun transformaByteArrayEmBitmap(imageArray: ByteArray): Bitmap{
+    return BitmapFactory.decodeByteArray(imageArray,0, imageArray.size)
 }

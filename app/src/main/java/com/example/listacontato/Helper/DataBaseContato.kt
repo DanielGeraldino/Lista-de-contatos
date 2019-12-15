@@ -124,7 +124,6 @@ class DataBaseContato(context: Context) : SQLiteOpenHelper(context, DATA_BASE_NA
     }
 
     fun addImage(imageArray: ByteArray, id: Int){
-        //writableDatabase.execSQL("UPDATE $TABLE_CONTATO  SET $KEY_IMAGEM_CONTATO = $imageArray WHERE $KEY_ID = $id")
 
         val cv = ContentValues()
         cv.put("$KEY_IMAGEM_CONTATO", imageArray)
